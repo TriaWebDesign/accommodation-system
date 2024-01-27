@@ -10,8 +10,6 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "../ui/button";
 import { BookmarkIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import { links } from "@/lib/globals";
 import Link from "next/link";
 
@@ -29,7 +27,7 @@ export function SideBar() {
             <BookmarkIcon />
             <h1>School</h1>
           </div>
-          <SheetDescription>How to be millionaire</SheetDescription>
+          <SheetDescription>You decide, We create</SheetDescription>
         </SheetHeader>
         <div className="flex flex-col gap-4 py-10">
           {links.map((link, i) => (
@@ -42,10 +40,10 @@ export function SideBar() {
             </Link>
           ))}
         </div>
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <Button variant="outline">Contact</Button>
-          <Button variant="outline">Become Gay</Button>
-          <Button variant="outline">KYS</Button>
+          <Button variant="outline">Chatbot</Button>
+          <Button variant="outline">Email</Button>
         </div>
       </SheetContent>
     </Sheet>
