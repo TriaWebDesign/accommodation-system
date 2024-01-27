@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 
 export default function Accomodations() {
   return (
-    <section className="mt-10">
+    <section>
       <h1 className="font-bold text-2xl mb-4">Accommodations</h1>
       <div className="flex flex-wrap gap-4 justify-center">
         {accommodations.map((accomodation, i) => (

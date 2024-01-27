@@ -31,7 +31,9 @@ export default function Navbar() {
         </div>
       </div>
       <div className="flex gap-4 items-center">
-        <Button>Apply Now!</Button>
+        <Button asChild>
+          <Link href="/register">Apply Now!</Link>
+        </Button>
         <ModeToggle />
       </div>
     </nav>

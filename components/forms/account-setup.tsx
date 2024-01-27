@@ -9,10 +9,15 @@ const formSchema = z.object({
     .string({
       required_error: "Please enter a valid id.",
     })
-    .min(9)
-    .max(9),
-  learning_disorder: z.string().min(1),
-  image_documents: z.array(z.string()).min(1).max(5),
+    .min(9, { message: "Please enter a valid id" })
+    .max(9, { message: "Please enter a valid ID. bggok" }),
+  learning_disorder: z
+    .string()
+    .min(1, { message: "Please select a learning disorder." }),
+  image_documents: z
+    .array(z.string())
+    .min(1, { message: "Include atleast 1 valid medical certificate." })
+    .max(5, { message: "5 max only asysig binugo." }),
 });
 
 import { Button } from "@/components/ui/button";
@@ -41,7 +46,13 @@ import { toast } from "../ui/use-toast";
 export default function AccountSetup({
   userData,
 }: {
-  userData: { id: string; email: string };
+  userData: {
+    id: string;
+    email: string;
+    firstname: string | null;
+    lastname: string | null;
+    imageUrl: string;
+  };
 }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

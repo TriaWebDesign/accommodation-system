@@ -8,8 +8,10 @@ export default async function OnboardingPage() {
   const userData = {
     id: user.id,
     email: user.emailAddresses[0].emailAddress,
+    firstname: user.firstName,
+    lastname: user.lastName,
+    imageUrl: user.imageUrl,
   };
-
   console.log(user);
 
   //const userInfo = await fetchUser(user.id);

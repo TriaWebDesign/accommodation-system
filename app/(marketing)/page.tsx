@@ -15,7 +15,6 @@ export default function Home() {
       <div>
         <Button variant="secondary">Learn More</Button>
       </div>
-      <Accomodations />
     </main>
   );
 }

@@ -28,13 +28,14 @@ export function SideBar() {
         </SheetHeader>
         <div className="flex flex-col gap-4 py-10">
           {links.map((link, i) => (
-            <Link
-              href={link.href}
-              key={i}
-              className="text-foreground hover:bg-muted transition-colors p-4 w-full rounded-lg"
-            >
-              {link.tag}
-            </Link>
+            <SheetTrigger asChild key={i}>
+              <Link
+                href={link.href}
+                className="text-foreground hover:bg-muted transition-colors p-4 w-full rounded-lg"
+              >
+                {link.tag}
+              </Link>
+            </SheetTrigger>
           ))}
         </div>
         <div className="flex flex-wrap gap-4">
