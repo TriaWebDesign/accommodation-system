@@ -1,7 +1,7 @@
 export function OnboardingPage() {
   return (
     <main>
-      <h1>Onboarding Page</h1>
+      <h1 className="text-8xl">Onboarding Page</h1>
     </main>
   );
 }
