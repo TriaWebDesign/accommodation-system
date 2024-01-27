@@ -36,7 +36,7 @@ export function SideBar() {
             <Link
               href={link.href}
               key={i}
-              className="text-zinc-300 hover:bg-zinc-800 transition-colors p-4 w-full rounded-lg"
+              className="text-foreground hover:bg-muted transition-colors p-4 w-full rounded-lg"
             >
               {link.tag}
             </Link>
