@@ -1,10 +1,11 @@
+import Accomodations from "@/components/marketing/accomodations";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <main className="h-full flex flex-col justify-center">
+    <main className="flex flex-col pb-10">
       <h1 className="text-7xl text-primary font-bold mb-5">
-        How to make a multi-million dollar Application?
+        We help Students with Learning Disorders.
       </h1>
       <p className="mb-4 text-lg">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa voluptas
@@ -14,6 +15,7 @@ export default function Home() {
       <div>
         <Button variant="secondary">Learn More</Button>
       </div>
+      <Accomodations />
     </main>
   );
 }
