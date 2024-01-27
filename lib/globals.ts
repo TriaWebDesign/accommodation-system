@@ -37,3 +37,20 @@ export const accommodations = [
       "Implementing a peer assistance or buddy system can foster a supportive learning environment, where students can collaborate and help each other as needed.",
   },
 ];
+
+export const learningDisorders = [
+  { full: "Attention-Deficit/Hyperactivity Disorder", short: "ADHD" },
+  { full: "Dyslexia", short: "Dyslexia" },
+  { full: "Dyscalculia", short: "Dyscalculia" },
+  { full: "Dysgraphia", short: "Dysgraphia" },
+  { full: "Specific Learning Disorder", short: "SLD" },
+  { full: "Autism Spectrum Disorder", short: "ASD" },
+  { full: "Intellectual Disability", short: "ID" },
+  { full: "Language Disorder", short: "LD" },
+  { full: "Nonverbal Learning Disorder", short: "NVLD" },
+  { full: "Executive Functioning Disorder", short: "EFD" },
+  { full: "Social Communication Disorder", short: "SCD" },
+  { full: "Tourette Syndrome", short: "TS" },
+  { full: "Auditory Processing Disorder", short: "APD" },
+  // Add more disorders as needed
+];
