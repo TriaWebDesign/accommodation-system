@@ -6,18 +6,20 @@ import { useForm, useWatch } from "react-hook-form";
 
 const formSchema = z.object({
   school_id: z
-    .string({
-      required_error: "Please enter a valid id.",
-    })
-    .min(9, { message: "Please enter a valid id" })
-    .max(9, { message: "Please enter a valid ID. bggok" }),
+    .string({})
+    .min(9, { message: "Please enter a valid ID" })
+    .max(9, { message: "Please enter a valid ID." }),
+  firstname: z.string(),
+  middlename: z.string(),
+  lastname: z.string(),
+  birthday: z.date(),
   learning_disorder: z
     .string()
     .min(1, { message: "Please select a learning disorder." }),
   image_documents: z
     .array(z.string())
     .min(1, { message: "Include atleast 1 valid medical certificate." })
-    .max(5, { message: "5 max only asysig binugo." }),
+    .max(5, { message: "Maximum of 5 documents only." }),
 });
 
 import { Button } from "@/components/ui/button";
@@ -42,6 +44,9 @@ import { useRouter } from "next/navigation";
 import { learningDisorders } from "@/lib/globals";
 import Image from "next/image";
 import { toast } from "../ui/use-toast";
+import { useEffect, useState } from "react";
+import { Student } from "@prisma/client";
+import { getStudent } from "@/lib/actions/student.actions";
 
 export default function AccountSetup({
   userData,
@@ -54,18 +59,36 @@ export default function AccountSetup({
     imageUrl: string;
   };
 }) {
+  const [studentInfo, setStudentInfo] = useState<Student | null>(null);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       school_id: "",
       learning_disorder: "",
       image_documents: [],
+      firstname: studentInfo?.firstname,
+      middlename: studentInfo?.middlename,
+      lastname: studentInfo?.lastname,
     },
   });
   const docs = useWatch({
     control: form.control,
     name: "image_documents",
   });
+
+  const schoolId = useWatch({ control: form.control, name: "school_id" });
+  useEffect(() => {
+    const fetchStudentInfo = async (schoolId: string) => {
+      const student = await getStudent(schoolId);
+      setStudentInfo(student);
+    };
+
+    if (schoolId && schoolId.length === 9) {
+      fetchStudentInfo(schoolId);
+    }
+  }, [schoolId]);
+
   const router = useRouter();
 
   const handleFileChange = (files: FileList | null) => {
@@ -104,6 +127,45 @@ export default function AccountSetup({
                   <FormDescription>
                     Valid school ID e.g 202100122
                   </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="firstname"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Firstname:</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Firstname" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="middlename"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Middlename:</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Middlename" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastname"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Lastname:</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Lastname" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

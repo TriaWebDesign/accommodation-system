@@ -1,9 +1,15 @@
 import AccountSetup from "@/components/forms/account-setup";
+import { getAccount } from "@/lib/actions/account.actions";
+import { db } from "@/lib/db";
 import { UserButton, currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 export default async function OnboardingPage() {
   const user = await currentUser();
   if (!user) return null; // to avoid typescript warnings
+
+  const account = await getAccount(user.id);
+  if (account?.onboarded) redirect("/dashboard");
 
   const userData = {
     id: user.id,
@@ -11,11 +17,8 @@ export default async function OnboardingPage() {
     firstname: user.firstName,
     lastname: user.lastName,
     imageUrl: user.imageUrl,
+    birthday: user.birthday,
   };
-  console.log(user);
-
-  //const userInfo = await fetchUser(user.id);
-  //if (userInfo) return null;
 
   return (
     <main className="h-screen p-10">

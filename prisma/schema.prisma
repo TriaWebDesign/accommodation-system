@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum AccountRole {
+  STUDENT
+  FACULTY
+}
+
+enum FacultyType {
+  TEACHING
+  DRC
+  ADMIN
+}
+
+model Account {
+  id        String      @id
+  email     String      @unique
+  image     String?
+  onboarded Boolean     @default(false)
+  role      AccountRole
+
+  student Student?
+  faculty Faculty?
+}
+
+model Student {
+  school_id  String   @id @unique
+  firstname  String
+  middlename String
+  lastname   String
+  birthday   DateTime
+
+  learning_disorder String?
+  documents         StudentDocument[]
+
+  accountId String?  @unique
+  account   Account? @relation(fields: [accountId], references: [id])
+}
+
+model Faculty {
+  school_id  String      @id @unique
+  firstname  String
+  middlename String
+  lastname   String
+  birthday   DateTime
+  type       FacultyType
+
+  accountId String?  @unique
+  account   Account? @relation(fields: [accountId], references: [id])
+}
+
+model StudentDocument {
+  id               Int      @id @default(autoincrement())
+  imagePath        String
+  isValid          Boolean
+  Student          Student? @relation(fields: [studentAccountId], references: [accountId])
+  studentAccountId String?
+}
