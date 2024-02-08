@@ -1,6 +1,5 @@
 import AccountSetup from "@/components/forms/account-setup";
 import { getAccount } from "@/lib/actions/account.actions";
-import { db } from "@/lib/db";
 import { UserButton, currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 

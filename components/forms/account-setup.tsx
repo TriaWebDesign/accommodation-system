@@ -12,7 +12,6 @@ const formSchema = z.object({
   firstname: z.string(),
   middlename: z.string(),
   lastname: z.string(),
-  birthday: z.date(),
   learning_disorder: z
     .string()
     .min(1, { message: "Please select a learning disorder." }),
@@ -40,12 +39,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
 import { learningDisorders } from "@/lib/globals";
 import Image from "next/image";
 import { toast } from "../ui/use-toast";
-import { useEffect, useState } from "react";
-import { Student } from "@prisma/client";
 import { getStudent } from "@/lib/actions/student.actions";
 
 export default function AccountSetup({
@@ -59,37 +55,21 @@ export default function AccountSetup({
     imageUrl: string;
   };
 }) {
-  const [studentInfo, setStudentInfo] = useState<Student | null>(null);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       school_id: "",
       learning_disorder: "",
       image_documents: [],
-      firstname: studentInfo?.firstname,
-      middlename: studentInfo?.middlename,
-      lastname: studentInfo?.lastname,
+      firstname: userData.firstname || "",
+      middlename: "",
+      lastname: userData.lastname || "",
     },
   });
   const docs = useWatch({
     control: form.control,
     name: "image_documents",
   });
-
-  const schoolId = useWatch({ control: form.control, name: "school_id" });
-  useEffect(() => {
-    const fetchStudentInfo = async (schoolId: string) => {
-      const student = await getStudent(schoolId);
-      setStudentInfo(student);
-    };
-
-    if (schoolId && schoolId.length === 9) {
-      fetchStudentInfo(schoolId);
-    }
-  }, [schoolId]);
-
-  const router = useRouter();
 
   const handleFileChange = (files: FileList | null) => {
     if (files) {
@@ -103,9 +83,12 @@ export default function AccountSetup({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    console.log("Submit");
+
+    const student = await getStudent(values.school_id);
     toast({
       title: "Form Submitted",
-      description: `${userData.email}`,
+      description: `${JSON.stringify(student)}`,
     });
     //await createUser(id, values);
     //router.push("/");
